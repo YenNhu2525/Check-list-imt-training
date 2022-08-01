@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ToDoList.Models.ToDo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">My ToDo List</h2>
+		</div>
+        <div class="col-6 text-end">
+            <a asp-controller="ToDoes" asp-action="Create" class="btn btn-primary">
+               <i class="bi bi-plus-circle"></i> &nbsp; Create New ToDo
+			</a>
+		</div>
+	</div>
+    <br /><br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (!item.IsDone)
+                {
+                    @Html.DisplayFor(modelItem => item.Description)
+                }
+                else{
+                    <div class="CompletedToDo">@Html.DisplayFor(modelItem => item.Description)</div>
+                }
+                
+            </td>
+            <td>
+                @Html.CheckBoxFor(modelItem => item.IsDone, new {id=item.Id, @class ="ActiveCheck"})
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>                
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+
